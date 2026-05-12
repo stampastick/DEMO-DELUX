@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Invitación digital de boda con RSVP, itinerario, galería, mesa de regalos y ubicación.">
+  <title>Nuestra Boda | Julieta & Romeo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/app.js" defer></script>
+</head>
+<body>
+  <div id="envelope-screen" class="envelope-screen" aria-label="Abrir invitación">
+    <div class="envelope-wrapper" aria-hidden="true">
+      <div class="envelope-flap envelope-left"></div>
+      <div class="envelope-flap envelope-right"></div>
+      <div class="envelope-flap envelope-bottom"></div>
+      <div class="envelope-flap envelope-top">
+        <div class="envelope-text">
+          <p class="envelope-kicker">Nos casamos</p>
+          <h1 class="envelope-title" data-text="coupleNames"></h1>
+          <p class="envelope-message">Te invitamos a celebrar con nosotros este gran día.</p>
+        </div>
+      </div>
+      <button class="wax-seal-button" type="button" data-action="open-envelope" aria-label="Abrir invitación">
+        <img id="wax-seal-img" src="" alt="Sello de cera de la invitación">
+      </button>
+    </div>
+  </div>
+
+  <audio id="bg-music" preload="none" loop></audio>
+  <button id="music-toggle" class="music-button" type="button" data-action="toggle-music" aria-label="Activar o pausar música">
+    <i id="music-icon" class="fa-solid fa-volume-high" aria-hidden="true"></i>
+  </button>
+
+  <header id="site-header" class="site-header" aria-label="Encabezado principal">
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a class="nav-brand" href="#hero" data-text="initialsNav"></a>
+      <button class="nav-toggle" type="button" data-action="toggle-menu" aria-controls="nav-links" aria-expanded="false" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="#hero" data-action="close-menu">Inicio</a></li>
+        <li><a href="#ubicaciones" data-action="close-menu">Ubicaciones</a></li>
+        <li><a href="#dresscode" data-action="close-menu">Vestimenta</a></li>
+        <li><a href="#regalos" data-action="close-menu">Regalos</a></li>
+        <li><button class="nav-rsvp" type="button" data-action="open-rsvp">RSVP</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="main-content" hidden>
+    <section id="hero" class="hero-section" aria-label="Portada de la invitación">
+      <div class="hero-content reveal-on-scroll">
+        <p class="subtitle subtitle-light">Nuestra Boda</p>
+        <h2 class="signature hero-title" data-text="coupleNames"></h2>
+        <div class="gold-line"></div>
+        <p class="hero-date" data-text="longDate"></p>
+      </div>
+      <a href="#historia" class="scroll-indicator" aria-label="Ir a nuestra historia">
+        <span>Deslizar</span>
+        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <section id="historia" class="story-section reveal-on-scroll">
+      <div class="story-grid">
+        <figure class="story-image-wrapper">
+          <img id="story-img" src="" alt="Fotografía de la pareja" loading="lazy">
+        </figure>
+        <article class="story-content">
+          <p class="story-initials" data-text="initials"></p>
+          <div id="story-text" class="story-text"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="fecha" class="save-date-section reveal-on-scroll">
+      <div class="save-date-content">
+        <h2 class="save-date-title">Save the Date</h2>
+        <p class="save-date-date" data-text="longDate"></p>
+        <div id="countdown" class="countdown" aria-live="polite"></div>
+        <p class="calendar-label">Agrégalo a tu calendario</p>
+        <div class="button-group">
+          <button class="btn btn-outline-light" type="button" data-action="download-ics">iOS y PC</button>
+          <a id="google-calendar-link" class="btn btn-outline-light" href="#" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="ubicaciones" class="section container reveal-on-scroll">
+      <p class="subtitle">Cuándo y dónde</p>
+      <h2 class="section-title">La Celebración</h2>
+      <div id="locations-grid" class="card-grid"></div>
+    </section>
+
+    <section id="itinerario" class="section container reveal-on-scroll">
+      <p class="subtitle">Minuto a minuto</p>
+      <h2 class="section-title">El Itinerario</h2>
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <section id="dresscode" class="section section-muted">
+      <div class="container reveal-on-scroll">
+        <p class="subtitle">Dress Code</p>
+        <h2 class="section-title">Formal</h2>
+        <div id="dresscode-grid" class="card-grid"></div>
+      </div>
+    </section>
+
+    <section id="hospedaje" class="section container reveal-on-scroll">
+      <p class="subtitle">Para invitados foráneos</p>
+      <h2 class="section-title">Hospedaje Sugerido</h2>
+      <div id="hotels-grid" class="card-grid"></div>
+    </section>
+
+    <section id="galeria" class="section container reveal-on-scroll">
+      <p class="subtitle">Nuestros recuerdos</p>
+      <h2 class="section-title">Galería</h2>
+      <div id="gallery-grid" class="gallery-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="regalos" class="registry-section reveal-on-scroll">
+      <i class="fa-solid fa-gift registry-icon" aria-hidden="true"></i>
+      <h2 class="registry-title"><span>Mesa de</span> <strong>Regalos</strong></h2>
+      <div class="registry-slider" aria-label="Opciones de mesa de regalos">
+        <div id="registry-track" class="registry-track"></div>
+      </div>
+      <article class="cash-gift-card container">
+        <h3>Gesto de cariño</h3>
+        <p>Su presencia es nuestro mejor regalo, pero si desean tener un detalle con nosotros, pueden hacerlo a través de una aportación para nuestra nueva vida juntos.</p>
+        <dl id="bank-details" class="bank-grid"></dl>
+      </article>
+    </section>
+
+    <section id="rsvp" class="rsvp-cta-section">
+      <div class="container reveal-on-scroll">
+        <h2 class="section-title section-title-light">RSVP</h2>
+        <p>Por favor, confirma tu asistencia antes del <span data-text="rsvpDeadline"></span>.</p>
+        <button class="btn btn-primary btn-pulse" type="button" data-action="open-rsvp">Confirmar asistencia</button>
+      </div>
+    </section>
+
+    <section class="hashtag-section reveal-on-scroll">
+      <i class="fa-brands fa-instagram hashtag-icon" aria-hidden="true"></i>
+      <p>Durante nuestra boda utiliza el hashtag</p>
+      <h2 id="wedding-hashtag" class="hashtag-text"></h2>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-socials" aria-label="Redes sociales">
+      <a href="https://www.facebook.com/people/Stampastick/61560664336469/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Stampastick"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+      <a href="https://www.instagram.com/stampastick/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Stampastick"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+      <span>STAMPASTICK</span>
+    </div>
+    <p class="footer-brand"><span>DEMO</span> <strong>Delux</strong></p>
+    <a class="footer-whatsapp" href="https://wa.me/5216871173148" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> +52 1 687 117 3148</a>
+  </footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Galería ampliada" hidden>
+    <button class="lightbox-button lightbox-close" type="button" data-action="close-lightbox" aria-label="Cerrar galería"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <button class="lightbox-button lightbox-prev" type="button" data-action="prev-lightbox" aria-label="Foto anterior"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+    <img id="lightbox-img" src="" alt="Foto ampliada de la galería">
+    <button class="lightbox-button lightbox-next" type="button" data-action="next-lightbox" aria-label="Foto siguiente"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+  </div>
+
+  <div id="rsvp-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rsvp-title" hidden>
+    <div class="modal-content">
+      <button class="modal-close" type="button" data-action="close-rsvp" aria-label="Cerrar formulario">&times;</button>
+      <section id="rsvp-form-container">
+        <header class="modal-header">
+          <h2 id="rsvp-title">Confirma tu asistencia</h2>
+          <p>Por favor responde antes del <span data-text="rsvpDeadline"></span>.</p>
+        </header>
+        <form id="rsvp-form" novalidate>
+          <div class="form-group">
+            <label for="guest-name">Nombre completo *</label>
+            <input id="guest-name" name="name" class="form-control" type="text" autocomplete="name" maxlength="80" required placeholder="Tu nombre completo">
+            <small class="form-error" data-error-for="name"></small>
+          </div>
+          <div class="form-group">
+            <label for="guest-phone">Teléfono (WhatsApp) *</label>
+            <input id="guest-phone" name="phone" class="form-control" type="tel" inputmode="tel" maxlength="20" required placeholder="Ej. 55 1234 5678">
+            <small class="form-error" data-error-for="phone"></small>
+          </div>
+          <fieldset class="form-group">
+            <legend>¿Asistirás a nuestra boda? *</legend>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="attendance" value="Si" required data-action="attendance-yes"> Sí, ahí estaré</label>
+              <label class="radio-label"><input type="radio" name="attendance" value="No" data-action="attendance-no"> No podré asistir</label>
+            </div>
+            <small class="form-error" data-error-for="attendance"></small>
+          </fieldset>
+          <p id="decline-message" class="message-box" hidden>Sentiremos mucho que no puedas acompañarnos. Gracias por avisar con tiempo.</p>
+          <div id="attendance-fields" class="conditional-fields" hidden>
+            <div class="form-group">
+              <label for="menu-preference">Restricción alimenticia</label>
+              <select id="menu-preference" name="menu" class="form-control">
+                <option value="Ninguna">Sin restricciones</option>
+                <option value="Vegetariano">Menú vegetariano</option>
+                <option value="Vegano">Menú vegano</option>
+                <option value="Alergia">Alergia (especificar en mensaje)</option>
+              </select>
+            </div>
+            <fieldset class="form-group">
+              <legend>¿Asistirás con acompañante(s)?</legend>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="hasCompanions" value="Si" data-action="companions-yes"> Sí iré acompañado</label>
+                <label class="radio-label"><input type="radio" name="hasCompanions" value="No" checked data-action="companions-no"> Asistiré solo(a)</label>
+              </div>
+            </fieldset>
+            <div id="companions-wrapper" class="companions-wrapper" hidden>
+              <div id="companions-list"></div>
+              <button id="add-companion" class="btn btn-secondary" type="button" data-action="add-companion">Agregar acompañante</button>
+              <p class="form-help">Máximo 5 acompañantes.</p>
+            </div>
+            <div class="form-group">
+              <label for="song-request">Canción para la fiesta</label>
+              <input id="song-request" name="song" class="form-control" type="text" maxlength="100" placeholder="¿Qué canción no puede faltar?">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="guest-message">Mensaje para los novios</label>
+            <textarea id="guest-message" name="message" class="form-control" rows="3" maxlength="500" placeholder="Escríbenos algo especial..."></textarea>
+          </div>
+          <button id="rsvp-submit" class="btn btn-submit" type="submit">Confirmar</button>
+        </form>
+      </section>
+      <section id="rsvp-success" class="rsvp-success" hidden>
+        <i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i>
+        <h2>¡Gracias!</h2>
+        <p>Tu respuesta fue registrada correctamente.</p>
+        <button class="btn btn-outline-light" type="button" data-action="close-rsvp">Cerrar</button>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
